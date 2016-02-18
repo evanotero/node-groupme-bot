@@ -1,7 +1,7 @@
 {
   "name": "InstaMe",
   "description": "Groupme Bot written in Node for Haig",
-  "repository": "",
+  "repository": "https://github.com/evanotero/node-groupme-bot",
   "logo": "",
   "keywords": []
 }
