@@ -28,5 +28,5 @@ server.listen(port);
 
 function ping() {
   this.res.writeHead(200);
-  this.res.end("Hey, I'm InstaHaig.");
+  this.res.end("Hey, I'm a GroupMe Bot.\nMy creator is Evan.");
 }
