@@ -7,14 +7,13 @@ function respond() {
   var req = JSON.parse(this.req.chunks[0]);
   var reHaig = /instahaig/;
   var reWilly = /countdown/;
-  var body;
 
   if (req.text) {
     if (reHaig.test(req.text.toLowerCase())) {
       console.log(reHaig+" TRUE");
       this.res.writeHead(200);
       // Message contents
-      body = {
+      var body = {
         "bot_id" : botID,
         "text" : "",
         "attachments" : [
@@ -32,7 +31,7 @@ function respond() {
       var endDate = new Date("01/17/2017 9:00 AM");
       var bodyResponse = calculateTimeUntil(endDate);
       // Message contents
-      body = {
+      var body = {
         "bot_id" : botID,
         "text" : botResponse
       };
@@ -50,7 +49,7 @@ function respond() {
   }
 }
 
-function postHaig(body) {
+function postMessage(body) {
   var options, botReq;
 
   // Application verification
