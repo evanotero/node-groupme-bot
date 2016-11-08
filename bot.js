@@ -29,7 +29,7 @@ function respond() {
       console.log(reWilly+" TRUE");
       this.res.writeHead(200);
       var endDate = new Date("01/17/2017 9:00 AM");
-      var bodyResponse = calculateTimeUntil(endDate);
+      var botResponse = calculateTimeUntil(endDate);
       // Message contents
       var body = {
         "bot_id" : botID,
