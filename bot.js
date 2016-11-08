@@ -5,40 +5,59 @@ var imgURL = process.env.IMG_URL;
 
 function respond() {
   var req = JSON.parse(this.req.chunks[0]);
-  var re = /instahaig/;
+  var reHaig = /instahaig/;
+  var reWilly = /countdown/;
+  var body;
 
-  if(req.text && re.test(req.text.toLowerCase())) {
-    console.log(re+" TRUE");
-    this.res.writeHead(200);
-    postMessage();
-    this.res.end();
+  if (req.text) {
+    if (reHaig.test(req.text.toLowerCase())) {
+      console.log(reHaig+" TRUE");
+      this.res.writeHead(200);
+      // Message contents
+      body = {
+        "bot_id" : botID,
+        "text" : "",
+        "attachments" : [
+          {
+            "type" : "image",
+            "url" : imgURL
+          }
+        ]
+      };
+      postMessage(body);
+      this.res.end();
+    } else if (reWilly.test(req.text.toLowerCase())) {
+      console.log(reWilly+" TRUE");
+      this.res.writeHead(200);
+      var endDate = new Date("01/17/2017 9:00 AM");
+      var bodyResponse = calculateTimeUntil(endDate);
+      // Message contents
+      body = {
+        "bot_id" : botID,
+        "text" : botResponse
+      };
+      postMessage(body);
+      this.res.end();
+    } else {
+      console.log(reHaig + " " + reWilly +" FALSE");
+      this.res.writeHead(200);
+      this.res.end();
+    }
   } else {
-    console.log(re+" FALSE");
+    console.log(reHaig + " " + reWilly +" FALSE");
     this.res.writeHead(200);
     this.res.end();
   }
 }
 
-function postMessage() {
-  var options, body, botReq;
+function postHaig(body) {
+  var options, botReq;
 
   // Application verification
   options = {
     hostname: 'api.groupme.com',
     path: '/v3/bots/post',
     method: 'POST'
-  };
-
-  // Message contents
-  body = {
-    "bot_id" : botID,
-    "text" : "",
-    "attachments" : [
-      {
-        "type" : "image",
-        "url" : imgURL
-      }
-    ]
   };
 
   console.log('sending image to ' + botID);
@@ -59,5 +78,23 @@ function postMessage() {
   botReq.end(JSON.stringify(body));
 }
 
+function calculateTimeUntil(endDate) {
+  var _second = 1000;
+  var _minute = _second * 60;
+  var _hour = _minute * 60;
+  var _day = _hour * 24;
+
+  var now = new Date();
+  var diff = endDate - now;
+  if (diff < 0) {
+    return "It's time yo.";
+  }
+  var days = Math.floor(diff / _day);
+  var hours = Math.floor((diff % _day) / _hour);
+  var minutes = Math.floor((diff % _hour) / _minute);
+  var seconds = Math.floor((diff % _minute) / _second);
+
+  return days + " days, " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds until Willy Reunion.";
+}
 
 exports.respond = respond;
