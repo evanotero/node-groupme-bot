@@ -28,7 +28,7 @@ function respond() {
     } else if (reWilly.test(req.text.toLowerCase())) {
       console.log(reWilly+" TRUE");
       this.res.writeHead(200);
-      var endDate = new Date("01/17/2017 9:00 AM");
+      var endDate = new Date("Jan 17 2017 09:00:00 GMT-0500 (EST)");
       var botResponse = calculateTimeUntil(endDate);
       // Message contents
       var body = {
