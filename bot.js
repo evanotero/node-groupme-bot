@@ -8,7 +8,7 @@ function respond() {
   var req = JSON.parse(this.req.chunks[0]);
   var reHaig = /instahaig/;
   var reWilly = /countdown/;
-  var reTechTrek = /bouje/
+  var reTechTrek = /boujee/
 
   if (req.text) {
     if (reHaig.test(req.text.toLowerCase())) {
