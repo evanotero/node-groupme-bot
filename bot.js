@@ -1,12 +1,14 @@
 var HTTPS = require('https');
 
 var botID = process.env.BOT_ID;
-var imgURL = process.env.IMG_URL;
+var img1URL = process.env.IMG_1_URL;
+var img2URL = process.env.IMG_2_URL;
 
 function respond() {
   var req = JSON.parse(this.req.chunks[0]);
   var reHaig = /instahaig/;
   var reWilly = /countdown/;
+  var reTechTrek = /bouje/
 
   if (req.text) {
     if (reHaig.test(req.text.toLowerCase())) {
@@ -19,7 +21,7 @@ function respond() {
         "attachments" : [
           {
             "type" : "image",
-            "url" : imgURL
+            "url" : img1URL
           }
         ]
       };
@@ -37,13 +39,29 @@ function respond() {
       };
       postMessage(body);
       this.res.end();
+    } else if (reTechTrek.test(req.text.toLowerCase())) {
+      console.log(reTechTrek+" TRUE");
+      this.res.writeHead(200);
+      // Message contents
+      var body = {
+        "bot_id" : botID,
+        "text" : "",
+        "attachments" : [
+          {
+            "type" : "image",
+            "url" : img2URL
+          }
+        ]
+      };
+      postMessage(body);
+      this.res.end();
     } else {
-      console.log(reHaig + " " + reWilly +" FALSE");
+      console.log(reHaig + " " + reWilly + " " + reTechTrek + " FALSE");
       this.res.writeHead(200);
       this.res.end();
     }
   } else {
-    console.log(reHaig + " " + reWilly +" FALSE");
+    console.log(reHaig + " " + reWilly + " " + reTechTrek + " FALSE");
     this.res.writeHead(200);
     this.res.end();
   }
